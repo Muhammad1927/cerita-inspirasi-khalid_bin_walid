@@ -6,6 +6,56 @@
     <title>Document</title>
   </head>
   <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 20px;
+    }
+
+    h1,
+    h2 {
+      color: #333;
+    }
+
+    form {
+      margin: 20px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    input[type="text"],
+    textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    button {
+      background-color: #007bff;
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    li {
+      margin: 10px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background-color: #f9f9f9;
+    }
+  </style>
   <body>
     <div class="container">
       <h1>Mengambil Hikmah Dari Kisah Sahabat Mulia KHOLID BIN WALID</h1>
@@ -103,5 +153,58 @@
         it
       </h5>
     </div>
+
+    <h1>Form Komentar</h1>
+    <form id="komentarForm">
+      Nama: <input type="text" name="nama" required /><br />
+      Komentar: <textarea name="komentar" required></textarea><br />
+      <button type="submit">Kirim Komentar</button>
+    </form>
+    <h2>Semua Komentar</h2>
+    <ul id="komentarList"></ul>
+
+    <script>
+      const komentarForm = document.getElementById("komentarForm");
+      const komentarList = document.getElementById("komentarList");
+
+      // Fungsi untuk menampilkan komentar
+      function showComments() {
+        fetch("/api/komentar")
+          .then((response) => response.json())
+          .then((data) => {
+            komentarList.innerHTML = "";
+            data.forEach((comment) => {
+              const li = document.createElement("li");
+              li.textContent = `${comment.nama}: ${comment.komentar}`;
+              komentarList.appendChild(li);
+            });
+          });
+      }
+
+      // Tangani pengiriman form
+      komentarForm.addEventListener("submit", function (event) {
+        event.preventDefault();
+        const formData = new FormData(komentarForm);
+
+        fetch("/api/komentar", {
+          method: "POST",
+          body: JSON.stringify(Object.fromEntries(formData)),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log("data:",data);
+            showComments();
+            komentarForm.reset();
+          })
+          .catch((err) => {
+            alert(err);
+          });
+      });
+
+      showComments();
+    </script>
   </body>
 </html>
