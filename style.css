@@ -1,0 +1,42 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Gaya teks */
+h1 {
+  font-size: 25px;
+  color: #0d5ec7;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+h2 {
+  font-size: 20px;
+  color: #555;
+}
+
+p {
+  font-size: 14px;
+  color: #666;
+  line-height: 1.5;
+}
+
+/* Gaya elemen khusus */
+b {
+  font-weight: bold;
+}
+
+i {
+  font-style: italic;
+}
+
+
